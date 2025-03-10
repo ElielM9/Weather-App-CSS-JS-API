@@ -30,8 +30,13 @@ function searchWeather(e) {
     return;
   }
 
-  // Consultar la API
-  consultApi(CITY_NAME, SELECTED_COUNTRY);
+  // Mostrar el loader antes de consultar la API
+  showLoader();
+
+  // Consultar la API después de 3 segundos
+  setTimeout(() => {
+    consultApi(CITY_NAME, SELECTED_COUNTRY);
+  }, 1500);
 }
 
 // Función para mostrar error
@@ -97,6 +102,8 @@ function showWeather(data) {
     <p class="result__range">Min: ${TEMP_MIN} / Max: ${TEMP_MAX} &#8451;</p>`;
 }
 
+/* HELPERS */
+
 // Función para convertir de Kelvin a celcius
 function convertKelvinToCelsius(kelvin) {
   return parseInt(kelvin - 273.15);
@@ -107,4 +114,15 @@ function clearHTML() {
   while (result.firstChild) {
     result.removeChild(result.firstChild);
   }
+}
+
+// Función para mostrar un loader
+function showLoader() {
+  // Limpiar el HTML
+  clearHTML();
+
+  const LOADER = document.createElement(`span`);
+  LOADER.classList.add(`loader`);
+
+  result.appendChild(LOADER);
 }
