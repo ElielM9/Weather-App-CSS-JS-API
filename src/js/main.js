@@ -1,6 +1,6 @@
 // Constantes
 const FORM = document.querySelector(`#search-form`);
-const result = document.querySelector(`#result`);
+const MAIN__CONTAINER = document.querySelector(`#main`);
 
 window.addEventListener(`load`, startApp);
 
@@ -71,6 +71,8 @@ function consultApi(cityName, countryCode) {
       // Limpiar HTML antes de mostrar resultados
       clearHTML();
 
+      console.log(data);
+
       // Validar que los resultados existan
       if (data.cod === `404`) {
         showError(`Ciudad no encontrada`);
@@ -89,17 +91,25 @@ function showWeather(data) {
     name,
     main: { temp, temp_max, temp_min },
     weather: [{ description, icon }],
+    sys: { country },
   } = data;
+
   const CELCIUS = convertKelvinToCelsius(temp);
   const TEMP_MIN = convertKelvinToCelsius(temp_min);
   const TEMP_MAX = convertKelvinToCelsius(temp_max);
 
-  result.innerHTML = `
-    <h2 class="result__city">${name}, ${data.sys.country}</h2>
-    <p class="result__temperature">${CELCIUS}&#8451;</p>
-    <img class="result__icon" src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}">
-    <p class="result__description">${description}</p>
-    <p class="result__range">Min: ${TEMP_MIN} / Max: ${TEMP_MAX} &#8451;</p>`;
+  // Crear la card que muestra el clima
+  const WEATHER_CARD = document.createElement(`div`);
+  WEATHER_CARD.classList.add(`weather-card`);
+  WEATHER_CARD.innerHTML = `
+    <h2 class="weather-card__location">${name}, ${country}</h2>
+    <p class="weather-card__temperature">${CELCIUS}&#8451;</p>
+    <img class="weather-card__icon" src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description} icono">
+    <p class="weather-card__description">${description}</p>
+    <p class="weather-card__range">Min: ${TEMP_MIN} / Max: ${TEMP_MAX} &#8451;</p>`;
+
+  // Añadir la card al HTML
+  MAIN__CONTAINER.appendChild(WEATHER_CARD);
 }
 
 /* HELPERS */
@@ -111,8 +121,8 @@ function convertKelvinToCelsius(kelvin) {
 
 // Función para limpiar el HTML
 function clearHTML() {
-  while (result.firstChild) {
-    result.removeChild(result.firstChild);
+  while (MAIN__CONTAINER.firstChild) {
+    MAIN__CONTAINER.removeChild(MAIN__CONTAINER.firstChild);
   }
 }
 
@@ -124,5 +134,5 @@ function showLoader() {
   const LOADER = document.createElement(`span`);
   LOADER.classList.add(`loader`);
 
-  result.appendChild(LOADER);
+  MAIN__CONTAINER.appendChild(LOADER);
 }

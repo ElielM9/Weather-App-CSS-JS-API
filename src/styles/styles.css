@@ -198,10 +198,11 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   color: var(--white);
 }
 
-.result {
+.weather-card {
   background-color: var(--white-transparent);
   width: 100%;
   max-width: 40rem;
@@ -215,24 +216,31 @@ p {
   text-align: center;
 }
 
-.result__temperature {
+.weather-card__location {
+  margin: 1rem 0;
+  font-size: 2.8rem;
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+.weather-card__temperature {
   margin: 0.5rem 0 0;
   font-size: 3.8rem;
   font-weight: 700;
 }
 
-.result__icon {
+.weather-card__icon {
   height: 15rem;
 }
 
-.result__description {
+.weather-card__description {
   margin: 0;
   font-size: 2.4rem;
   font-weight: 300;
   text-transform: capitalize;
 }
 
-.result__range {
+.weather-card__range {
   margin: 0.5rem 0;
   color: var(--white);
   font-weight: 300;
