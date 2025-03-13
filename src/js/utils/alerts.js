@@ -1,5 +1,5 @@
 // Importaciones
-import { FORM } from "../utils/selectors.js";
+import { FORM } from "./selectors.js";
 
 // Funcion que muestra un mensaje de error
 export function showError(message) {
